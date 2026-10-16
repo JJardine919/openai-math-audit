@@ -2,7 +2,9 @@
 
 Independent audit by [Lattice24](mailto:jim@lattice24.com) of the manuscripts OpenAI released in [openai/math](https://github.com/openai/math) (October 2026, Apache-2.0). That repository has issues and discussions turned off, so we are publishing these corrections here. Archived copy: [doi:10.5281/zenodo.23422995](https://doi.org/10.5281/zenodo.23422995).
 
-**Status (October 16, 2026):** 467 of the 547 manuscripts without a Lean formalization have been reviewed so far. 463 showed no gap, 1 could not be assessed, 2 have confirmed gaps (described below), and 1 dependent paper inherits the first gap. The audit is ongoing. We publish only findings that have survived independent verification.
+**Status (October 16, 2026): complete.** All 547 manuscripts without a Lean formalization have been reviewed. 544 showed no gap. 2 have confirmed gaps (described below), and 1 dependent paper inherits the first gap. We publish only findings that have survived independent verification.
+
+**Open to everyone.** Every review is published here, not just the findings: one file per paper in [`reviews/`](reviews), every skeptic pass in [`verification/`](verification), and a one-line-per-paper table in [`RESULTS.tsv`](RESULTS.tsv). Use it freely (CC BY 4.0). If you work in one of these fields and think we got a paper wrong, in either direction, please [open an issue](https://github.com/JJardine919/openai-math-audit/issues) naming the paper and the step. We will check it and publish the correction here. This is meant as a free, shared record for the people who have given their working lives to these subjects, not a verdict handed down to them.
 
 | # | Manuscript | Severity | Kind |
 | --- | --- | --- | --- |
@@ -27,7 +29,7 @@ Details
 So at least one of the following is false as stated: (a) the absolute leaf bound with wrong-expansion weights on odd copies; (b) the wrong-copy costs in hol:wrong-costs; (c) the identification of the averaged baseline with the normalization. The holomorphicity proof depends on all three.
 
 Downstream
-"Natural Occupation Measures for Critical Square-Lattice FK Interfaces" uses this paper's chordal:trace and loop:plane as standing inputs (02-inputs.tex, Inputs 2.1 and 2.4) and states its Theorem 1 unconditionally for all q in [1,4). It inherits the gap. Other papers in the same family may also depend on these inputs; we have not finished checking them.
+"Natural Occupation Measures for Critical Square-Lattice FK Interfaces" uses this paper's chordal:trace and loop:plane as standing inputs (02-inputs.tex, Inputs 2.1 and 2.4) and states its Theorem 1 unconditionally for all q in [1,4). It inherits the gap. We checked the four other papers that cite it: three do not rely on the failed part, and "Self-dual random-cluster interfaces below one" uses it in one corollary only (see `verification/inherit35_*`).
 
 How this was found
 Independent audit by Lattice24. Big J (Lattice24's hive organism) ranked the unformalized manuscripts and steered the order of review. Claude (Anthropic) review agents audited the proofs. Finding 1 was then checked by three independent skeptic passes, each instructed to refute it. All three failed to refute it, and each rated it critical. We would welcome a pointer to the step we have misread, if there is one.
@@ -59,6 +61,13 @@ The `evidence/` folder holds the original review and every verification pass, ex
 - `review_052_natural_occupation_measures.json`, `skeptic1_052.json`: the dependent paper, which inherits the gap.
 - `review_373_mub_dimension_six.json`: the original review of the dimension-six paper.
 - `skeptic1_373.json`: an independent pass instructed to refute it. It failed to refute it and kept the severity at major.
+
+The full audit:
+
+- `RESULTS.tsv`: one line per paper (audit number, result, number of minor notes, family, title, folder name in openai/math).
+- `reviews/rank_NNN.json`: the referee review of every paper, with its main claim, what was checked (`coverage`) and any notes. Minor notes are a referee's remarks (unclear wording, small slips that do not affect the result); they are not findings.
+- `reviews/rank_014_part*.json`: "The hypercube Ramsey number has linear order" (about 9,900 lines) was too long for one reviewer, so it was split into eight section blocks plus one review of how they combine. No gap was found. The earlier single-reviewer attempt is kept as `rank_014_single.json`.
+- `verification/`: every skeptic pass, including the checks of four papers that cite Finding 1 (`inherit35_*`). Three do not rely on the failed part. "Self-dual random-cluster interfaces below one" quotes it in one corollary only (the extension to 1 ≤ q < 4); its own main theorem, for 0 < q < 1, is unaffected.
 
 ## Method
 
