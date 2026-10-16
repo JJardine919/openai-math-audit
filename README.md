@@ -1,6 +1,6 @@
 # Corrections to OpenAI's math release (openai/math)
 
-Independent audit by [Lattice24](mailto:jim@lattice24.com) of the manuscripts OpenAI released in [openai/math](https://github.com/openai/math) (October 2026, Apache-2.0). That repository has issues and discussions turned off, so we are publishing this correction here.
+Independent audit by [Lattice24](mailto:jim@lattice24.com) of the manuscripts OpenAI released in [openai/math](https://github.com/openai/math) (October 2026, Apache-2.0). That repository has issues and discussions turned off, so we are publishing these corrections here. Archived copy: [doi:10.5281/zenodo.23422995](https://doi.org/10.5281/zenodo.23422995).
 
 **Status (October 16, 2026):** 467 of the 547 manuscripts without a Lean formalization have been reviewed so far. 463 showed no gap, 1 could not be assessed, 2 have confirmed gaps (described below), and 1 dependent paper inherits the first gap. The audit is ongoing. We publish only findings that have survived independent verification.
 
