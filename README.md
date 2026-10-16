@@ -1,10 +1,16 @@
-# Correction: a critical gap in OpenAI's "Square-lattice FK interfaces and nested loops for 1 ≤ q < 4"
+# Corrections to OpenAI's math release (openai/math)
 
 Independent audit by [Lattice24](mailto:jim@lattice24.com) of the manuscripts OpenAI released in [openai/math](https://github.com/openai/math) (October 2026, Apache-2.0). That repository has issues and discussions turned off, so we are publishing this correction here.
 
-**Status (October 15, 2026):** 192 of the 547 manuscripts without a Lean formalization have been reviewed so far. 190 showed no gap, 1 could not be assessed, and 1 has a confirmed critical gap, described below. The audit is ongoing. We publish only findings that have survived independent verification.
+**Status (October 16, 2026):** 467 of the 547 manuscripts without a Lean formalization have been reviewed so far. 463 showed no gap, 1 could not be assessed, 2 have confirmed gaps (described below), and 1 dependent paper inherits the first gap. The audit is ongoing. We publish only findings that have survived independent verification.
 
-## The finding
+| # | Manuscript | Severity | Kind |
+| --- | --- | --- | --- |
+| 1 | Square-lattice FK interfaces and nested loops for 1 ≤ q < 4 | Critical | Proof gap: the main theorem is not established as written |
+| 1a | Natural Occupation Measures for Critical Square-Lattice FK Interfaces | Inherits #1 | Uses #1's results as inputs |
+| 2 | The maximum number of mutually unbiased bases in dimension six | Major | Verifiability gap: the computer proof's code and run records are not released |
+
+## Finding 1: Square-lattice FK interfaces (critical)
 
 Manuscript: preprints/Square-lattice-FK-interfaces-and-nested-loops-for-1-leq-q-lt-4-September-23-2026 (observable.tex, preliminaries.tex)
 
@@ -24,9 +30,25 @@ Downstream
 "Natural Occupation Measures for Critical Square-Lattice FK Interfaces" uses this paper's chordal:trace and loop:plane as standing inputs (02-inputs.tex, Inputs 2.1 and 2.4) and states its Theorem 1 unconditionally for all q in [1,4). It inherits the gap. Other papers in the same family may also depend on these inputs; we have not finished checking them.
 
 How this was found
-Independent audit by Lattice24. Big J (Lattice24's hive organism) ranked the unformalized manuscripts and steered the order of review. Claude (Anthropic) review agents audited the proofs. This claim was then checked by three independent skeptic passes, each instructed to refute it. All three failed to refute it, and each rated it critical. We would welcome a pointer to the step we have misread, if there is one.
+Independent audit by Lattice24. Big J (Lattice24's hive organism) ranked the unformalized manuscripts and steered the order of review. Claude (Anthropic) review agents audited the proofs. Finding 1 was then checked by three independent skeptic passes, each instructed to refute it. All three failed to refute it, and each rated it critical. We would welcome a pointer to the step we have misread, if there is one.
 
 Jim Jardine, Lattice24 (jim@lattice24.com)
+
+## Finding 2: Mutually unbiased bases in dimension six (major)
+
+Manuscript: preprints/The-maximum-number-of-mutually-unbiased-bases-in-dimension-six-September-24-2026 (execution.tex, conclusion.tex)
+
+Summary
+The paper claims N(6) = 3: no four mutually unbiased bases exist in C^6. The upper bound is computer-assisted, and the paper states that it is conditional on one recorded execution (Theorem execute:finite-theorem, used in the proof of Theorem 1.1). The code and records that execution depends on are not in the public release, so the upper bound cannot be checked from what OpenAI has published. This is a verifiability gap, not a demonstrated mathematical error.
+
+Details
+1. Section 7 (execution.tex) cites an accompanying verification/code/ directory with seven C++ sources (including stageC.cpp), extraction.json with their SHA-256 digests, proof_run.py, build/build-manifest.json, verification/computation/README.md, verification/REPRODUCE.md and the execution archive full-run-01/.
+2. None of these files is in openai/math (checked against main at commit 1581d4c, October 12, 2026, the latest as of October 16). The paper folder holds only README.md, the PDF and the LaTeX sources. Other papers in the same release do ship their verification/ directories.
+3. Theorem execute:finite-theorem assumes that the cited sources were used and that every run met its terminal, provenance and batch conditions. Without the code and records, none of these hypotheses, the counts in the execution tables or the hashes can be checked.
+4. OpenAI's own Lean notes (lean/docs/266.md) say the formalization proves only that a family has at most five members, and "does not establish the paper's upper bound of three or its computer-assisted exclusion of four arbitrary bases."
+5. The written mathematics in Sections 2 to 6 was reviewed and no error was found. The floating-point appendix was spot-checked only, since it refers to routines that cannot be inspected.
+
+What would close it: releasing the verification/ directory and the full-run-01 archive the paper cites.
 
 ## Evidence
 
@@ -35,6 +57,8 @@ The `evidence/` folder holds the original review and every verification pass, ex
 - `review_035_square_lattice_fk.json`: the original referee review.
 - `skeptic1_035.json`, `skeptic2_035.json`, `skeptic3_035.json`: three independent passes, each instructed to refute the claim. All three failed to refute it, and all three rated it critical.
 - `review_052_natural_occupation_measures.json`, `skeptic1_052.json`: the dependent paper, which inherits the gap.
+- `review_373_mub_dimension_six.json`: the original review of the dimension-six paper.
+- `skeptic1_373.json`: an independent pass instructed to refute it. It failed to refute it and kept the severity at major.
 
 ## Method
 
