@@ -6,11 +6,13 @@ Independent audit by [Lattice24](mailto:jim@lattice24.com) of the manuscripts Op
 
 **Open to everyone.** Every review is published here, not just the findings: one file per paper in [`reviews/`](reviews), every skeptic pass in [`verification/`](verification), and a one-line-per-paper table in [`RESULTS.tsv`](RESULTS.tsv). Use it freely (CC BY 4.0). If you work in one of these fields and think we got a paper wrong, in either direction, please [open an issue](https://github.com/JJardine919/openai-math-audit/issues) naming the paper and the step. We will check it and publish the correction here. This is meant as a free, shared record for the people who have given their working lives to these subjects, not a verdict handed down to them.
 
+**Update, October 28, 2026.** On October 26 OpenAI updated openai/math (commit 7ef5c0c). For "The maximum number of mutually unbiased bases in dimension six" they restored the C++ source and the saved numerical records of the computation, with a Python checker (`verification/saved-run/VERIFY.md` in that paper's folder). That addresses the verifiability gap in Finding 2 as we described it. We have not yet run their checker on the saved records; we will publish the result here when we have. Finding 1 and its dependent paper are unchanged upstream. The same update added two new manuscripts, which this audit has not reviewed.
+
 | # | Manuscript | Severity | Kind |
 | --- | --- | --- | --- |
 | 1 | Square-lattice FK interfaces and nested loops for 1 ≤ q < 4 | Critical | Proof gap: the main theorem is not established as written |
 | 1a | Natural Occupation Measures for Critical Square-Lattice FK Interfaces | Inherits #1 | Uses #1's results as inputs |
-| 2 | The maximum number of mutually unbiased bases in dimension six | Major | Verifiability gap: the computer proof's code and run records are not released |
+| 2 | The maximum number of mutually unbiased bases in dimension six | Major (addressed upstream Oct 26) | Verifiability gap: the code and run records were not released; OpenAI restored them on October 26 |
 
 ## Finding 1: Square-lattice FK interfaces (critical)
 
@@ -51,6 +53,8 @@ Details
 5. The written mathematics in Sections 2 to 6 was reviewed and no error was found. The floating-point appendix was spot-checked only, since it refers to routines that cannot be inspected.
 
 What would close it: releasing the verification/ directory and the full-run-01 archive the paper cites.
+
+Update (October 28, 2026): OpenAI restored the C++ source and saved numerical records on October 26 (commit 7ef5c0c), with a Python checker. Our check of those records is pending.
 
 ## Evidence
 
